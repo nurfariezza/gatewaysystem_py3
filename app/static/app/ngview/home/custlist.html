@@ -1,0 +1,65 @@
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" ng-show="title">
+        <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" ng-bind="title"></h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-info" ng-show="list != null && list.length < 1">
+          <strong>No records found.</strong>
+        </div>
+        <div class="table-responsive">
+          <div class="box box-info">Please [Double Click] to select customer</div>
+          <table class="table table-striped table-hover table-condensed" ng-show="list != null && list.length > 0">
+            <thead>
+              <tr>
+                <th colspan="2">
+                  <div class="pull-left">
+                    <pre>{{custpager.itemmessage}}</pre>
+                  </div>
+                </th>
+              </tr>
+             <tr class="well">
+                <th class="nowrap">Batch ID</th>
+                <th class="nowrap">Batch Date</th>
+                <th class="nowrap">Batch Qty</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="o in list" 
+                  ng-click="selectRow($event, o)"
+                  ng-dblclick="selectCust($event, o)" 
+                  ng-class="{info: o.select}">
+                <td>{{o.batch_id}}</td>
+                <td>{{o.batch_date}}</td>
+                <td>{{o.batch_qty}}</td>
+
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2">
+                  <div class="pull-left">
+                    <uib-pagination boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                                    class="pagination-sm"
+                                    ng-model="custpage"
+                                    total-items="custpager.total"
+                                    items-per-page="custpager.pagesize"
+                                    max-size="custpager.pagesize"
+                                    ng-change="custpageChanged()">
+                    </uib-pagination>
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-flat btn-sm" ng-click="ok()" ng-disabled="form.$invalid"><i class="glyphicon glyphicon-ok"></i> OK</button>
+        <button type="button" class="btn btn-warning btn-flat btn-sm" ng-click="$hide()"><i class="glyphicon glyphicon-ban-circle"></i> Close</button>
+      </div>
+    </div>
+  </div>
+</div>

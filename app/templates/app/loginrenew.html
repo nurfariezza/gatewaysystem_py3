@@ -1,0 +1,37 @@
+{% extends "app/layoutempty.html" %}
+
+{% block content %}
+{% load staticfiles %}
+
+{% if error %}
+<div class="alert alert-danger alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+  {{error}}
+</div>
+{% endif %}
+
+<div class="login-box">
+  <div class="login-logo"><b>Gateway Numbering</b> Portal</div>
+  <div class="login-box-body">
+    <form action="{% url 'changepwd' %}" method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <p>Your password is more than 3 months old, please change your password to maintain better security protection</p>
+      </div>
+      <div class="form-group">
+        <input type="password" name="pwd" class="form-control" placeholder="Existing Password" required />
+      </div>
+      <div class="form-group">
+        <input type="password" name="newpwd" class="form-control" placeholder="New Password" required />
+      </div>
+      <div class="form-group">
+        <input type="password" name="newpwd2" class="form-control" placeholder="Re-type New Password" required />
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block btn-flat"><i class="glyphicon glyphicon-floppy-save"></i> Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

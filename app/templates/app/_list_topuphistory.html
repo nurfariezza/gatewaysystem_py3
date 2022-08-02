@@ -1,0 +1,31 @@
+{% load staticfiles %}
+
+<div class="table-responsive" ng-init="init()">
+  <table class="table table-striped table-hover table-condensed">
+    <thead>
+      <tr class="well well-sm">
+        <th>T.Up Date</th>
+        <th>T.Up Amount</th>
+        <th>Old C.Limit</th>
+        <th>New C.Limit</th>
+        <th>Updated By</th>
+        <th>Pay-Later</th>
+        <th>Index</th>
+        <th>Request Key</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="o in list">
+        <td>{% verbatim %}{{o.topupdatetimestr}}{% endverbatim %}</td>
+        <td>{% verbatim %}{{o.topupvalue}}{% endverbatim %}</td>
+        <td>{% verbatim %}{{o.oldcreditlimit}}{% endverbatim %}</td>
+        <td>{% verbatim %}{{o.newcreditlimit}}{% endverbatim %}</td>
+        <td>{% verbatim %}{{o.topupby}}{% endverbatim %}</td>
+        <td>{% verbatim %}{{o.paylaterstr}}{% endverbatim %}</td>
+        <td>{% verbatim %}{{o.indexkey}}{% endverbatim %}</td>
+        <td>{% verbatim %}{{o.topuprequestkey}}{% endverbatim %}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<script src="{% static 'app/js/topuphistory/controller.js' %}"></script>

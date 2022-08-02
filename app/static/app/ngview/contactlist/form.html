@@ -1,0 +1,90 @@
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" ng-show="title">
+        <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" ng-bind="title"></h4>
+      </div>
+      <div class="modal-body">
+        <form name="fm" class="form-horizontal">
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Full name</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" placeholder="Full name" name="sname" ng-model="form.sname" ng-maxlength="200" />
+              <div ng-messages="fm.sname.$error">
+                <span class="alert-danger" ng-message="maxlength">The field Full name must be a string with a maximum length of 200</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">PIC</label>
+            <div class="col-md-10">
+              <input type="checkbox" name="ipersonincharge" ng-model="form.ipersonincharge" ng-true-value="1" ng-false-value="0" />
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Race</label>
+            <div class="col-md-10">
+              <select class="form-control" name="srace" ng-model="form.srace">
+                <option value="">Please select</option>
+                <option value="Chinese">Chinese</option>
+                <option value="Malay">Malay</option>
+                <option value="Indian">Indian</option>
+                <option value="Others">Others</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Position</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" placeholder="Position" name="sposition" ng-model="form.sposition" ng-maxlength="50" />
+              <div ng-messages="fm.sposition.$error">
+                <span class="alert-danger" ng-message="maxlength">The field Position must be a text with a maximum length of 50</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Offie Phone No</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" placeholder="Office Phone No" name="sphone" ng-model="form.sphone" ng-maxlength="20" />
+              <div ng-messages="fm.sphone.$error">
+                <span class="alert-danger" ng-message="maxlength">The field Office Phone No must be a text with a maximum length of 20</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Fax No</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" placeholder="Fax No" name="sfax" ng-model="form.sfax" ng-maxlength="20" />
+              <div ng-messages="fm.sfax.$error">
+                <span class="alert-danger" ng-message="maxlength">The field Fax No must be a text with a maximum length of 20</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Mobile Phone No</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" placeholder="Mobile Phone No" name="smobile" ng-model="form.smobile" ng-maxlength="20" />
+              <div ng-messages="fm.sname.$error">
+                <span class="alert-danger" ng-message="maxlength">The field Mobile Phone No must be a text with a maximum length of 20</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Email</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" placeholder="Email" name="semail" ng-model="form.semail" ng-maxlength="100" />
+              <div ng-messages="fm.semail.$error">
+                <span class="alert-danger" ng-message="maxlength">The field Email must be a text with a maximum length of 100</span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-flat btn-sm" ng-click="save()" ng-disabled="fm.$invalid"><i class="glyphicon glyphicon-floppy-save"></i> Save</button>
+        <button type="button" class="btn btn-warning btn-flat btn-sm" ng-click="$hide()"><i class="glyphicon glyphicon-ban-circle"></i> Close</button>
+      </div>
+    </div>
+  </div>
+</div>

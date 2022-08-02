@@ -1,0 +1,134 @@
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" ng-show="title">
+        <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" ng-bind="title"></h4>
+      </div>
+      <div class="modal-body">
+        <div class="btn-toolbar" role="toolbar" ng-show="selectedbb.count > 0">
+          <div class="btn-group btn-group-sm" role="group">
+            <button type="button" class="btn btn-info btn-flat" ng-click="addtoacc()" ng-disabled="selectedbb.count < 1">Add to Account</button>
+            <div class="btn-group btn-group-sm">
+              <button type="button" class="btn btn-info btn-flat" ng-click="bbpstntoggle()" ng-disabled="selectedbb.count < 1">Toggle PSTN</button>
+              <button type="button" class="btn btn-info dropdown-toggle" ng-disabled="selectedbb.count < 1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="#" ng-click="bbpstnset(1)">Allow PSTN</a></li>
+                <li><a href="#" ng-click="bbpstnset(0)">Not Allow PSTN</a></li>
+              </ul>
+            </div>
+            <div class="btn-group btn-group-sm">
+              <button type="button" class="btn btn-info btn-flat" ng-click="nicenumtoggle()" ng-disabled="selectedbb.count < 1">Toggle Nice Number</button>
+              <button type="button" class="btn btn-info dropdown-toggle" ng-disabled="selectedbb.count < 1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="#" ng-click="nicenumset(1)">Set As Nice Number</a></li>
+                <li><a href="#" ng-click="nicenumset(0)">Reset Nice Number</a></li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn-info btn-flat" ng-click="generatepwd()" ng-disabled="selectedbb.count < 1" ng-show="show015pwd == true">Gen. Password</button>
+          </div>
+        </div>
+        <br>
+
+        <form name="fm" class="form-horizontal">
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Account</label>
+            <div class="col-md-8">
+              <input type="text" class="form-control disabled" placeholder="Account" ng-model="rform.acc" disabled="disabled" />
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Wholesaler</label>
+            <div class="col-md-6">
+              <input type="text" class="form-control disabled" placeholder="Wholesaler" ng-model="rform.wskey" disabled="disabled" />
+            </div>
+            <div class="col-md-2">
+              <input type="checkbox" ng-model="rform.nicenum" /> Nice Number Only
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Search</label>
+            <div class="col-md-6">
+              <div class="input-group input-group-sm">
+                <input type="text" class="form-control" placeholder="Search" ng-model="rform.search" />
+                <span class="input-group-btn">
+                  <button class="btn btn-info btn-flat btn-sm" type="button" ng-click="reloadFormList()"><i class="glyphicon glyphicon-search"></i></button>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary btn-flat btn-sm" ng-click="download()"><i class="glyphicon glyphicon-save-file"></i> Download</button>
+            </div>
+          </div>
+        </form>
+        <div class="alert alert-info" ng-show="list != null && list.length < 1">
+          <strong>No records found.</strong>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped table-hover table-condensed" ng-show="list != null && list.length > 0">
+            <thead>
+              <tr>
+                <th colspan="8">
+                  <div class="pull-left">
+                    <pre>{{bbpager.itemmessage}}</pre>
+                  </div>
+                </th>
+              </tr>
+              <tr class="well well-sm">
+                <th>
+                  <input type="checkbox" ng-model="selectedbb.all" ng-click="selectbbAll($event)" />
+                </th>
+                <th>No.</th>
+                <th class="nowrap">RT 015/03 Number</th>
+                <th class="nowrap" ng-show="show015pwd == true">Password</th>
+                <th>PSTN</th>
+                <th>Nice No</th>
+                <th>WholesaleKey</th>
+                <th class="nowrap">Deregistration Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="o in list">
+                <td>
+                  <input type="checkbox" ng-model="o.selected" ng-click="selectbbRow($event, o)" />
+                </td>
+                <td>{{$index + 1 + bbpager.pagesize * (bbpage - 1)}}</td>
+                <td>{{o.bb_rt015}}</td>
+                <td ng-show="show015pwd == true">{{o.bb_015pwd}}</td>
+                <td>{{o.bb_allowpstn}}</td>
+                <td>{{o.bb_nicenum}}</td>
+                <td>{{o.bb_wskey}}</td>
+                <td class="nowrap">{{o.bb_deregisterdatestr}}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="7">
+                  <div class="pull-left">
+                    <uib-pagination boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                                    class="pagination-sm"
+                                    ng-model="bbpage"
+                                    total-items="bbpager.total"
+                                    items-per-page="bbpager.pagesize"
+                                    max-size="bbpager.pagesize"
+                                    ng-change="bbpageChanged()">
+                    </uib-pagination>
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning btn-flat" ng-click="$hide()"><i class="glyphicon glyphicon-ban-circle"></i> Close</button>
+      </div>
+    </div>
+  </div>
+</div>

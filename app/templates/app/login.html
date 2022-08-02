@@ -1,0 +1,121 @@
+{% extends "app/layoutempty.html" %}
+
+{% block content %}
+{% load staticfiles %}
+
+{% if error %}
+<div class="alert alert-danger alert-dismissible" role="alert">
+  {{error}}
+</div>
+{% endif %}
+
+<div class="login-box" id="container" style="display:none">
+  <div class="login-logo"><b>Golden Key</b> System</div>
+  <div class="login-box-body">
+    <form id="submitform" action="{% url 'auth' %}" method="post">
+      {% csrf_token %}
+      <div id="Myemail">
+        Email
+    </div> 
+      <div class="form-group">
+        <input type="text" value = "username" name="username" class="form-control" placeholder="User ID" />
+      </div>
+      <div class="form-group">
+        <input type="password" name="pwd" class="form-control" placeholder="User Password" />
+      </div>
+      <div class="form-group">
+        <button type="submit" value = "authlogin" class="btn btn-primary btn-block btn-flat"><i class="glyphicon glyphicon-log-in"></i> Log In</button>
+      </div>
+    </form>
+    <div class="social-auth-links text-center">
+      {% comment %} <a href="{{url}}" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using REDtone Email</a> {% endcomment %}
+    </div>
+  </div>
+</div>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    const url = "https://apis.redtone.com/PMS/v2/profile/summary";
+    //default
+    function methodFetch() {
+      console.log("fetch example");
+      fetch(url, {
+        credentials: "include",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((resp) => resp.json())
+        .then((resp) => {
+          console.log(resp)
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    function methodAxios() {
+      console.log("axios example");
+      let config = {
+        url: url,
+        method: "get",
+        withCredentials: true,
+      };
+      axios
+        .request(config)
+        .then((resp) => {
+          console.log(resp.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    function methodJquery() {
+      console.log("jquery example");
+      $(document).ready(function () {
+
+
+        $.ajax({
+          type: "GET",
+          url: url,
+          dataType: "Json",
+          xhrFields: {
+              withCredentials: true
+          },
+          ContentType : "application/json",
+
+          success: function(resp){
+            console.log('succes: ');
+            email =resp.email;
+            document.getElementById("Myemail").innerHTML = email;
+            window.location="//apps.redtone.com:8585/gatewaynum/app/cust/loginemail/"+email;
+            //window.location ='//localhost:8000/app/cust/loginemail/'.email
+
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+            console.log('failed');
+            console.log("User Not Found");
+            window.location ='//intranet.redtone.com/rd-authentication/?url=https://apps.redtone.com:8585/gatewaynum/'
+          }
+      });
+        
+
+
+      
+      });
+    }
+    //methodFetch();
+    //methodAxios();
+    methodJquery();
+  </script>
+
+
+
+{% endblock %}
+{% block scripts %}
+
+
+<script src="{% static 'app/js/lib/jquery-1.11.3.min.js' %}"></script>
+<script src="{% static 'app/js/login.js' %}"></script>
+{% endblock %}

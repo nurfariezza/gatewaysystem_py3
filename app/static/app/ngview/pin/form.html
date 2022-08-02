@@ -1,0 +1,42 @@
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" ng-show="title">
+        <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" ng-bind="title"></h4>
+      </div>
+      <div class="modal-body">
+        <form name="fm" class="form-horizontal">
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Pin</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" placeholder="Pin" name="pin" ng-model="form.pin" required />
+              <div ng-messages="fm.pin.$error">
+                <span class="alert-danger" ng-message="required">Pin is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Description</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" placeholder="Description" name="description" ng-model="form.description" />
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Credit Limit</label>
+            <div class="col-md-10">
+              <input type="number" class="form-control" placeholder="Credit Limit" name="creditlimit" min="0" ng-model="form.creditlimit" />
+              <div ng-messages="fm.creditlimit.$error">
+                <span class="alert-danger" ng-message="min">Invalid credit limit</span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-flat btn-sm" ng-click="save()" ng-disabled="fm.$invalid"><i class="glyphicon glyphicon-floppy-save"></i> Save</button>
+        <button type="button" class="btn btn-warning btn-flat btn-sm" ng-click="$hide()"><i class="glyphicon glyphicon-ban-circle"></i> Close</button>
+      </div>
+    </div>
+  </div>
+</div>

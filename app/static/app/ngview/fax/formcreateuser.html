@@ -1,0 +1,54 @@
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" ng-show="title">
+        <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" ng-bind="title"></h4>
+      </div>
+      <div class="modal-body">
+        <form name="fm" class="form-horizontal">
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Username</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" placeholder="Username" name="username" ng-model="form.username" required />
+              <div ng-messages="fm.username.$error">
+                <span class="alert-danger" ng-message="required">Username is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Login ID</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" placeholder="Login ID" name="loginid" ng-model="form.loginid" required />
+              <div ng-messages="fm.loginid.$error">
+                <span class="alert-danger" ng-message="required">Login ID is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Password</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" placeholder="Password" name="password" ng-model="form.password" required />
+              <div ng-messages="fm.password.$error">
+                <span class="alert-danger" ng-message="required">Password is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Email</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" placeholder="Email" name="email" ng-model="form.email" required />
+              <div ng-messages="fm.email.$error">
+                <span class="alert-danger" ng-message="required">Email is required</span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-flat btn-sm" ng-click="ok()" ng-disabled="fm.$invalid"><i class="glyphicon glyphicon-ok"></i> Create Now</button>
+        <button type="button" class="btn btn-warning btn-flat btn-sm" ng-click="$hide()"><i class="glyphicon glyphicon-ban-circle"></i> Close</button>
+      </div>
+    </div>
+  </div>
+</div>

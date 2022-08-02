@@ -1,0 +1,15 @@
+run batch file . click run
+
+open browser
+
+http://localhost:8000/
+
+how to make path without gkreg for local testing
+update file in
+C:\Users\ainur.fadzil\Documents\gkregsystem_py3\app\static\app\js\utils.js
+
+ function getUrl(a) {
+       comment this line-> var app = '/gkregsystem';
+        enable this line--> var app = "";
+        return app + a;
+    }

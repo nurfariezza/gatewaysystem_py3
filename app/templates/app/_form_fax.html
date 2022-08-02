@@ -1,0 +1,128 @@
+{% load staticfiles %}
+
+<div class="box box-info" ng-init="init()">
+  <form class="form-horizontal">
+    <div class="box-body">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <label>iFax User</label>
+            <button class="btn btn-primary btn-flat btn-sm" type="button" ng-click="reload()">Reload</button>
+            <div class="box box-primary">
+              <div ng-repeat="o in list"
+                   ng-click="selectRow($event, o)"
+                   ng-dblclick="selectUser($event, o)"
+                   ng-class="{'alert-info': o.select}">{% verbatim %}{{o.username}}{% endverbatim %}</div>
+            </div>
+            <button class="btn btn-primary btn-flat btn-sm" type="button" ng-disabled="userdetail.userdetailext == null || userdetail.userdetailext.smsmasterid == 0"
+                    ng-click="createUser()">New Fax</button>
+            <button class="btn btn-danger btn-flat btn-sm" type="button" ng-disabled="list == null || list.length < 1"
+                    ng-click="deleteUser()">Delete</button>
+            <button class="btn btn-success btn-flat btn-sm" type="button" ng-click="save()">Save Changes</button>
+          </div>
+          <div class="col-md-5">
+            <div class="form-group form-group-sm">
+              <label class="col-md-2 control-label">Selected User</label>
+              <div class="col-md-5">
+                <input type="text" class="form-control disabled" disabled="disabled" ng-model="faxuser.username" />
+              </div>
+              <div class="col-md-2">
+                <input type="text" class="form-control disabled" disabled="disabled" ng-model="faxuser.guseridx" />
+              </div>
+            </div>
+            <div class="form-group form-group-sm">
+              <label class="col-md-2 control-label">Email</label>
+              <div class="col-md-7">
+                <input type="email" class="form-control" placeholder="Email" ng-model="model.email" />
+              </div>
+            </div>
+            <div class="form-group form-group-sm">
+              <label class="col-md-2 control-label">Custom Hedaer</label>
+              <div class="col-md-7">
+                <input type="text" class="form-control" placeholder="Custom Header" ng-model="model.custom_header" />
+              </div>
+            </div>
+            <div class="form-group form-group-sm">
+              <label class="col-md-2 control-label">TSI</label>
+              <div class="col-md-7">
+                <input type="text" class="form-control" placeholder="TSI" ng-model="model.tsi" />
+              </div>
+            </div>
+            <div class="form-group form-group-sm">
+              <label class="col-md-2 control-label">Outgoing Fax Daily Limit</label>
+              <div class="col-md-2">
+                <input type="text" class="form-control" placeholder="Outgoing Fax Daily Limit" ng-model="model.out_dailylimit" />
+              </div>
+              <label class="col-md-2 control-label">Password Retry</label>
+              <div class="col-md-3">
+                <input type="text" class="form-control" placeholder="Password Retry" ng-model="model.password_retry" />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group form-group-sm">
+              <div class="col-md-12">
+                <div class="checkbox">
+                  <input type="checkbox" ng-model="model.disable_out_fax" /> Disable Outgoing Fax
+                </div>
+                <div class="checkbox">
+                  <input type="checkbox" ng-model="model.out_notify_email" /> Outgoing Fax notification via Email
+                </div>
+              </div>
+            </div>
+            <fieldset>
+              <legend>Incoming Fax</legend>
+              <div class="form-group form-group-sm">
+                <label class="col-md-2 control-label">DID</label>
+                <div class="col-md-5">
+                  <div class="input-group input-group-sm">
+                    <input type="text" class="form-control disabled" placeholder="DID" disabled="disabled" ng-model="model.ddi" />
+                    <span class="input-group-btn">
+                      <button class="btn btn-primary btn-flat" type="button" ng-disabled="model.ddi != null && model.ddi != ''"
+                              ng-click="loadDID()"><i class="glyphicon glyphicon-list"></i></button>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-1">
+                  <button class="btn btn-danger btn-flat btn-sm" type="button" ng-disabled="model.ddi == null || model.ddi == ''"
+                          ng-click="deleteNumber()"><i class="glyphicon glyphicon-remove"></i></button>
+                </div>
+              </div>
+              <div class="form-group form-group-sm">
+                <label class="col-md-2 control-label">SMS Notification</label>
+                <div class="col-md-5">
+                  <input type="text" class="form-control" placeholder="SMS Notification" ng-model="model.in_notify_num" />
+                </div>
+              </div>
+              <div class="form-group form-group-sm">
+                <label class="col-md-2 control-label">Format</label>
+                <div class="col-md-5">
+                  <label class="radio-inline">
+                    <input type="radio" name="ifaxformat" ng-model="model.in_format" value="0" /> tif
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="ifaxformat" ng-model="model.in_format" value="1" /> pdf
+                  </label>
+                </div>
+              </div>
+              <div class="form-group form-group-sm">
+                <div class="col-md-7">
+                  <div class="checkbox">
+                    <input type="checkbox" ng-model="model.disable_in_fax" /> Disable Incoming Fax
+                  </div>
+                  <div class="checkbox">
+                    <input type="checkbox" ng-model="model.fwdemail" /> Forward to email
+                  </div>
+                  <div class="checkbox">
+                    <input type="checkbox" ng-model="model.disable_ifax" /> Disable iFax
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<script src="{% static 'app/js/fax/controller.js' %}"></script>

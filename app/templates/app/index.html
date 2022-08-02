@@ -1,0 +1,136 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+{% load staticfiles %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Main content -->
+  <section class="content">
+    <!-- Main row -->
+    <div class="row" id="mainContainer" style="display:none" ng-controller="HomeCtrl" ng-init="init()">
+      <section class="col-md-12">
+        <div class="btn-toolbar" role="toolbar">
+          <div class="btn-group btn-group-sm" role="group">
+
+
+           <button type="button" class="btn btn-primary btn-flat" ng-click="aninewreg()">Check Numbers</button>
+            <button type="button" class="btn btn-primary btn-flat" ng-click="view015number()">Check by Wholesaler</button>
+            <button type="button" class="btn btn-primary btn-flat" ng-click="view015numberbatchid()">Check by BatchID</button>
+
+
+           <button type="button" class="btn btn-primary btn-flat" ><a href="{% url 'assign015number' %}" target="_blank">Assign Numbers (WS)</a></button>
+
+            <button type="button" class="btn btn-primary btn-flat"><a href="{% url 'assignnumberstate' %}" target="_blank">Assign Numbers to State</a></button>
+            <button type="button" class="btn btn-primary btn-flat" ><a href="{% url 'reserve015number' %}" target="_blank">Reserve Numbers</a></button>
+
+            <button type="button" class="btn btn-primary btn-flat" ng-click="downloadusednumber()">Download Used Numbers</button> 
+            <button type="button" class="btn btn-primary btn-flat" ng-click="downloadavailnumber()">Download Available Numbers</button> 
+          
+            <div class="btn-group btn-group-sm" role="group">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                . . . <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="{% url 'createstate' %}" target="_blank">Add/Create State</a></li>
+                <li><a href="{% url 'createmanager' %}" target="_blank">Add Account Manager</a></li>
+                <li><a href="{% url 'createbatch' %}" target="_blank" >Upload New Batch </a></li>
+              </ul>
+            </div> 
+
+          </div>
+        </div>
+        <div class="box box-info">
+          <div class="box-header with-border">
+            {% comment %} <h3 class="box-title">Customer Details{% verbatim %}{{caption}}{% endverbatim %}</h3> {% endcomment %}
+          </div>
+          <div class="box-body">
+          <form class="form-horizontal">
+
+              <div class="form-group form-group-sm row">
+
+              {% csrf_token %}
+                <div class="col-md-4">
+                   <label class="radio-inline">
+                    <input type="radio" ng-model="cust.searchby" ng-value="2"> Batch ID
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" ng-model="cust.searchby" ng-value="1"> Caller ID / Phone
+                  </label> 
+                 
+                  <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" ng-model="cust.keyword"
+                           ng-change="custkeywordChange()"
+                           ui-keypress="{13: 'findCust()'}" />
+                    <span class="input-group-btn">
+                      <button class="btn btn-primary btn-flat" type="button" ng-click="findCust()"><i class="glyphicon glyphicon-search"></i></button>
+                    </span>
+                  </div>
+                </div>
+                </form>
+              </div>
+            
+          </div>
+        </div>
+      </section>
+      <section class="col-md-12">
+        <div class="nav-tabs-custom">
+          <ul class="nav nav-tabs">
+            <li role="presentation"class="active"><a href="#custinfo" data-toggle="tab">Batch Info</a></li>
+
+          </ul>
+        </div>
+
+        <div class="tab-content">
+          <div id="custinfo" class="tab-pane fade in active" ng-controller="CustCtrl">
+            {% include 'app/_form_customer_info.html' %}
+          </div>
+          
+        </div>
+      </section> 
+      <section class="col-md-12">
+        <div class="nav-tabs-custom">
+          <ul class="nav nav-tabs">
+            <li role="presentation"><a href="#callerid" data-toggle="tab">Available Number</a></li>
+            <li role="presentation"><a href="#usedcallerid" data-toggle="tab">Assigned Number (WS)  </a></li>
+            <li role="presentation"><a href="#blockcallerid" data-toggle="tab">Block Number </a></li>
+            <li role="presentation"><a href="#testcallerid" data-toggle="tab">Testing Number</a></li>
+            <li role="presentation"><a href="#reservedcallerid" data-toggle="tab">Reserved Number</a></li>
+            <li role="presentation"><a href="#usednumber" data-toggle="tab">Used Number</a></li>
+
+
+          </ul>
+        </div>
+        <div class="tab-content">
+          
+          <div id="callerid" class="tab-pane fade" ng-controller="BBCalleridavailCtrl">
+            {% include 'app/bbcallerid/_bbcallerid_content.html' %}
+          </div>
+          <div id="usedcallerid" class="tab-pane fade" ng-controller="BBCalleridusedCtrl">
+            {% include 'app/bbcallerid/_callerid_used.html'%}
+          </div>
+          <div id="blockcallerid" class="tab-pane fade" ng-controller="BBCalleridblockCtrl">
+            {% include 'app/bbcallerid/_callerid_blocked.html' %}
+          </div>
+          <div id="testcallerid" class="tab-pane fade" ng-controller="BBCalleridtestCtrl">
+            {% include 'app/bbcallerid/_callerid_testing.html' %}
+          </div>
+          <div id="reservedcallerid" class="tab-pane fade" ng-controller="BBCalleridreserveCtrl">
+            {% include 'app/bbcallerid/_callerid_reserved.html' %}
+          </div>
+          <div id="usednumber" class="tab-pane fade" ng-controller="BBCalleridusedbyaccntidCtrl">
+            {% include 'app/bbcallerid/_callerid_usedbyacccntid.html' %}
+          </div>
+
+
+       </div>
+      </section>
+
+    </div><!-- /.row (main row) -->
+
+  </section><!-- /.content -->
+</div><!-- /.content-wrapper -->
+<script src="{% static 'app/js/home/controller.js' %}?v={{ver}}"></script>
+
+{% endblock %}
+

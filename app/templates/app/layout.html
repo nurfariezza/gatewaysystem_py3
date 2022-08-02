@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html ng-app="mvcapp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    {% load staticfiles %}
+    <link href="{% static 'app/favicon.ico' %}" rel="shortcut icon" type="image/x-icon" />
+    <link href="{% static 'app/css/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'app/css/bootstrap/css/font-awesome.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'app/css/bootstrap/css/ionicons.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'app/css/bootstrap/css/AdminLTE.css' %}" rel="stylesheet" />
+    <link href="{% static 'app/css/bootstrap/css/skins/_all-skins.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'app/css/lib/select.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'app/css/lib/toastr.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'app/css/lib/loading-bar.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'app/css/lib/xeditable.css' %}" rel="stylesheet" />
+    <link href="{% static 'app/css/lib/jquery.fileupload-ui.css' %}" rel="stylesheet" />
+    <link href="{% static 'app/css/bootstrap/css/themes/image.css' %}" rel="stylesheet" />
+    <link href="{% static 'app/css/app.css' %}" rel="stylesheet" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="{% static 'app/js/lib/jquery-1.11.3.min.js' %}"></script>
+    <script src="{% static 'app/js/lib/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'app/js/lib/jquery.fileupload.js' %}"></script>
+    <script src="{% static 'app/js/lib/jquery.easing.js' %}"></script>
+    <script src="{% static 'app/js/lib/jquery.blockUI.js' %}"></script>
+    <script src="{% static 'app/js/lib/jquery.scrollUp.min.js' %}"></script>
+    <script src="{% static 'app/scripts/respond.min.js' %}"></script>
+    <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
+    <script src="{% static 'app/js/lib/bootstrap.min.js' %}"></script>
+    <script src="{% static 'app/js/lib/AdminLTE/app.js' %}"></script>
+    <script src="{% static 'app/js/lib/angular.min.js' %}"></script>
+    <script src="{% static 'app/js/lib/angular-route.min.js' %}"></script>
+    <script src="{% static 'app/js/lib/angular-animate.min.js' %}"></script>
+    <script src="{% static 'app/js/lib/angular-sanitize.min.js' %}"></script>
+    <script src="{% static 'app/js/lib/angular-messages.min.js' %}"></script>
+    <script src="{% static 'app/js/lib/angular-strap.min.js' %}"></script>
+    <script src="{% static 'app/js/lib/angular-strap.tpl.min.js' %}"></script>
+    <script src="{% static 'app/js/lib/ui-bootstrap-tpls-0.14.3.min.js' %}"></script>
+    <script src="{% static 'app/js/lib/ui-utils.min.js' %}"></script>
+    <script src="{% static 'app/js/lib/select.min.js' %}"></script>
+    <script src="{% static 'app/js/lib/toastr.min.js' %}"></script>
+    <script src="{% static 'app/js/lib/loading-bar.min.js' %}"></script>
+    <script src="{% static 'app/js/lib/underscore-min.js' %}"></script>
+    <script src="{% static 'app/js/lib/bootbox.min.js' %}"></script>
+    <script src="{% static 'app/js/lib/xeditable.min.js' %}"></script>
+    <script src="{% static 'app/js/lib/contextMenu.js' %}"></script>
+    <script src="{% static 'app/js/utils.js' %}"></script>
+    <script src="{% static 'app/js/route.js' %}?v={{ver}}"></script>
+    <script src="{% static 'app/js/app.js' %}"></script>
+    <script src="{% static 'app/js/filters.js' %}"></script>
+    <script src="{% static 'app/js/services.js' %}"></script>
+    <script src="{% static 'app/js/directives.js' %}"></script>
+  </head>
+  <body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+      <header class="main-header">
+        <a href="" class="logo">
+          <!-- mini logo for sidebar mini 50x50 pixels -->
+          <span class="logo-mini"><b>GN</b>P</span>
+          <!-- logo for regular state and mobile devices -->
+          <span class="logo-lg"><b>Gateway Numbering  </b> Portal</span>
+        </a>
+        <nav class="navbar navbar-static-top" role="navigation">
+          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+          </a>
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <span>{{request.user.username}} {% if request.session.googleuser %}({{request.session.googleuser.name}}){% endif %}</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <!-- User image -->
+                  <li class="user-header">
+                    <img src="{% if request.session.googleuser %}{{request.session.googleuser.picture}}{% else %}{% static 'app/css/bootstrap/img/avatar5.png' %}{% endif %}" class="img-circle" alt="User Image">
+                    <p>
+                      {{request.user.username}} {% if request.session.googleuser %}({{request.session.googleuser.name}}){% endif %}
+                    </p>
+                  </li>
+                  <li class="user-body">
+                  </li>
+                  <!-- Menu Footer-->
+                  <li class="user-footer">
+                    <div class="pull-right">
+                      <a href="{% url 'logoff' %}" class="btn btn-primary btn-flat"><i class="glyphicon glyphicon-log-out"></i> Log out</a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      {% block content %}{% endblock %}
+    </div>
+    {% block scripts %}{% endblock %}
+    <iframe id="exportFrame" style="display: none; width: 0; height: 0"></iframe>
+    {% csrf_token %}
+  </body>
+</html>

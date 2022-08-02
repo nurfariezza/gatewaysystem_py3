@@ -1,0 +1,112 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+{% load staticfiles %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Main content -->
+  <section class="content">
+    <!-- Main row -->
+    <div class="row" id="mainContainer" style="display:none" ng-controller="IndexCtrl" ng-init="init()">
+      <section class="col-md-12">
+        <form name="fm" class="form-horizontal" role="form">
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Select By Wholesaler</label>
+            <div class="col-md-4">
+              <ui-select ng-model="form.ws.selected" style="width: 100%">
+                <ui-select-match placeholder="Please select">{% verbatim %}{{$select.selected.wholesalerkey}}{% endverbatim %} - {% verbatim %}{{$select.selected.wholesalername}}{% endverbatim %}</ui-select-match>
+                <ui-select-choices repeat="o in form.wslist | filter: $select.search">
+                  <span ng-bind-html="o.wholesalername | highlight : $select.search"></span>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Date</label>
+            <div class="col-md-2">
+              <div class="input-group">
+                <span class="input-group-addon">From</span>
+                <input type="text" class="form-control"
+                       ng-model="form.dateFrom"
+                       ng-required="true"
+                       datepicker-popup="yyyy-MM-dd"
+                       is-open="form.openedDateFrom" />
+                <span class="input-group-btn">
+                  <button class="btn btn-primary btn-flat btn-sm" ng-click="openDateFrom()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="input-group">
+                <span class="input-group-addon">To</span>
+                <input type="text" class="form-control"
+                       ng-model="form.dateTo"
+                       ng-required="true"
+                       datepicker-popup="yyyy-MM-dd"
+                       is-open="form.openedDateTo" />
+                <span class="input-group-btn">
+                  <button class="btn btn-primary btn-flat btn-sm" ng-click="openDateTo()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <div class="col-md-6 col-md-offset-2">
+              <button type="button" class="btn btn-primary btn-flat btn-sm" ng-click="clearcust()">Clear</button>
+              <div class="btn-group">
+                <button type="button" class="btn btn-primary btn-flat btn-sm" ng-click="downloadreport(0)" ng-disabled="fm.$invalid"><i class="glyphicon glyphicon-save-file"></i> Download Excel</button>
+                <button type="button" class="btn btn-primary btn-flat btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-disabled="fm.$invalid">
+                  <span class="caret"></span>
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a href="#" ng-click="downloadreport(1)">Text</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+      <section class="col-md-12">
+        <form class="form-horizontal" role="form">
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Account ID</label>
+            <div class="col-md-4">
+              <div class="input-group input-group-sm">
+                <input type="text" class="form-control" placeholder="Account ID" ng-model="form.accountid"
+                       ui-keypress="{13: 'lookup()'}" />
+                <span class="input-group-btn">
+                  <button class="btn btn-primary btn-flat btn-sm" type="button" ng-click="lookup()"><i class="glyphicon glyphicon-search"></i></button>
+                </span>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="table-responsive">
+          <table class="table table-striped table-hover table-condensed">
+            <thead>
+              <tr>
+                <th colspan="2">
+                  <div class="pull-left">
+                    <pre>Selected customer</pre>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="o in form.custlist" ng-dblclick="removecust($event, o)">
+                <td>{% verbatim %}{{o.accountid}}{% endverbatim %}</td>
+                <td>{% verbatim %}{{o.name}}{% endverbatim %}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div><!-- /.row (main row) -->
+
+  </section><!-- /.content -->
+</div><!-- /.content-wrapper -->
+<script src="{% static 'app/js/topupreport/controller.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,4 @@
+https://developers.google.com/api-client-library/python/auth/web-app#callinganapi
+
+scopes
+https://developers.google.com/identity/protocols/googlescopes#iamv1

@@ -1,0 +1,43 @@
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" ng-show="title">
+        <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" ng-bind="title"></h4>
+      </div>
+      <div class="modal-body">
+        <form name="fm" class="form-horizontal">
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">DID Prefix</label>
+            <div class="col-md-5">
+              <div class="input-group input-group-sm">
+                <input type="text" class="form-control" placeholder="DID Prefix" ng-model="didprefix" />
+                <span class="input-group-btn">
+                  <button class="btn btn-info btn-flat" type="button" ng-click="reloadDID()"><i class="glyphicon glyphicon-search"></i></button>
+                </span>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="alert alert-info" ng-show="didlist != null && didlist.length < 1">
+          <strong>No records found.</strong>
+        </div>
+        <div class="table-responsive">
+          <div class="box box-info">Please [Double Click] to select Fax DID number</div>
+          <div ng-show="didlist != null && didlist.length > 0">
+            <div ng-repeat="o in didlist"
+                 ng-click="selectDIDRow($event, o)"
+                 ng-dblclick="selectDID($event, o)"
+                 ng-class="{'alert-info': o.select}">
+              {{o.faxnum}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-flat btn-sm" ng-click="okdid()" ng-disabled="fm.$invalid"><i class="glyphicon glyphicon-ok"></i> OK</button>
+        <button type="button" class="btn btn-warning btn-flat btn-sm" ng-click="$hide()"><i class="glyphicon glyphicon-ban-circle"></i> Close</button>
+      </div>
+    </div>
+  </div>
+</div>

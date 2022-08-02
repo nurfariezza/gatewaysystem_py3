@@ -1,0 +1,50 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+{% load staticfiles %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Main content -->
+  <section class="content">
+    <!-- Main row -->
+    <div class="row" id="mainContainer" style="display:none" ng-controller="IndexCtrl" ng-init="init()">
+      <section class="col-md-12">
+        <form name="fm" class="form-horizontal" role="form">
+
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Select Wholesaler</label>
+            <div class="col-md-4">
+              <ui-select ng-model="form.ws.selected" style="width: 100%">
+                <ui-select-match placeholder="Please select">{% verbatim %}{{$select.selected.wholesalerkey}}{% endverbatim %} - {% verbatim %}{{$select.selected.wholesalername}}{% endverbatim %}</ui-select-match>
+                <ui-select-choices repeat="o in form.wslist | filter: $select.search">
+                  <span ng-bind-html="o.wholesalername | highlight : $select.search"></span>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+          </div>
+          
+
+          <div class="form-group form-group-sm">
+            <div class="col-md-3 col-md-offset-2">
+              <div ng-controller = "myCtrl">
+              <input type = "file" class="form-control" file-model = "myFile"/>
+                  <button ng-click = "uploadFile()">upload me</button>
+            </div>
+          
+
+              <div class="col-md-3 col-md-offset-2">
+                <button class="btn btn-primary btn-flat btn-sm" type="button" ng-click="uploadFile()">Upload</button>
+              </div>
+            </div>
+          </div>
+          </div>
+        </form>
+      </section>
+    </div><!-- /.row (main row) -->
+
+  </section><!-- /.content -->
+</div><!-- /.content-wrapper -->
+<script src="{% static 'app/js/view015number/controller.js' %}?v={{ver}}"></script>
+
+{% endblock %}

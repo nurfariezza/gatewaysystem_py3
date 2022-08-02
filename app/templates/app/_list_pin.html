@@ -1,0 +1,52 @@
+{% load staticfiles %}
+
+<div class="table-responsive" ng-init="init()">
+  <div class="col-md-6">
+    <div class="alert alert-info" ng-show="selected.count > 0">
+      {% verbatim %}{{selected.message()}}{% endverbatim %}
+    </div>
+    <div class="btn-toolbar" role="toolbar">
+      <div class="btn-group btn-group-sm" role="group">
+        {% if edit %}<button type="button" class="btn btn-primary btn-flat" ng-click="add()">New Pin</button>{% endif %}
+        <button type="button" class="btn btn-primary btn-flat" ng-click="copy()" ng-show="showList()">Copy</button>
+        <button type="button" class="btn btn-primary btn-flat" ng-click="copywd()" ng-show="showList()">Copy with Desc</button>
+        <button type="button" class="btn btn-primary btn-flat" ng-click="import()">Import</button>
+        <button type="button" class="btn btn-primary btn-flat" ng-click="importWithDesc()">Import with Desc</button>
+        <button type="button" class="btn btn-primary btn-flat" ng-click="removeItems()" ng-show="showList()">Delete</button>
+        <button type="button" class="btn btn-primary btn-flat" ng-click="removeAll()" ng-show="showList()">Delete All</button>
+      </div>
+    </div>
+
+    <table class="table table-striped table-hover table-condensed">
+      <thead>
+        <tr class="well well-sm">
+          <th>
+            <input type="checkbox" ng-model="selected.all" ng-click="selectAll($event)" />
+          </th>
+          <th></th>
+          <th>User ID</th>
+          <th>Pin</th>
+          <th>Description</th>
+          <th>Credit Limit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="o in list" ng-dblclick="edituserid($event, o)">
+          <td>
+            <input type="checkbox" ng-model="o.selected" ng-click="selectRow($event, o)" />
+          </td>
+          <th>
+            {% if edit %}
+            <a href ng-click="editpin(o)"><i class="glyphicon glyphicon-edit"></i></a>
+            {% endif %}
+          </th>
+          <td>{% verbatim %}{{o.userid}}{% endverbatim %}</td>
+          <td>{% verbatim %}{{o.pin}}{% endverbatim %}</td>
+          <td>{% verbatim %}{{o.description}}{% endverbatim %}</td>
+          <td>{% verbatim %}{{o.creditlimit}}{% endverbatim %}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script src="{% static 'app/js/pin/controller.js' %}"></script>

@@ -1,0 +1,66 @@
+{% load staticfiles %}
+
+<div class="alert alert-info" ng-show="selected.count > 0">
+  {% verbatim %}{{selected.message()}}{% endverbatim %}
+</div>
+<div class="btn-toolbar" role="toolbar">
+  <div class="btn-group btn-group-sm" role="group">
+    {% if features.update %}<button type="button" class="btn btn-primary btn-flat" ng-click="removeItems()" ng-show="selected.count > 0"><i class="glyphicon glyphicon-remove"></i> Delete</button>{% endif %}
+    <button type="button" class="btn btn-primary btn-flat" ng-click="copy()" ng-show="showList()">Copy</button>
+    <button type="button" class="btn btn-primary btn-flat" ng-click="viewpdf()" ng-show="showList()">PDF View</button>
+    {% if features.update %}<button type="button" class="btn btn-primary btn-flat" ng-click="import()">Import</button>{% endif %}
+    {% if features.update %}<button type="button" class="btn btn-primary btn-flat" ng-click="bulkCallerID()">Bulk CallerID Creation</button>{% endif %}
+    {% if features.update %}<button type="button" class="btn btn-primary btn-flat" ng-click="suspend(0)" ng-show="selected.count > 0">Suspend</button>{% endif %}
+    {% if features.update %}<button type="button" class="btn btn-primary btn-flat" ng-click="suspend(1)" ng-show="selected.count > 0">Enable</button>{% endif %}
+    {% if features.update %}<button type="button" class="btn btn-primary btn-flat" ng-click="suspendAll(0)" ng-show="showList()">Suspend All</button>{% endif %}
+    {% if features.update %}<button type="button" class="btn btn-primary btn-flat" ng-click="suspendAll(1)" ng-show="showList()">Enable All</button>{% endif %}
+    <button type="button" class="btn btn-primary btn-flat" ng-click="checkCallerID()">Check CallerID</button>
+  </div>
+</div>
+
+{% if features.update %}
+<form class="form-inline">
+  <div class="form-group">
+    <input type="text" class="form-control input-sm" placeholder="Phone No" name="callerid" ng-model="form.callerid"
+           ui-keypress="{13: 'add()'}" />
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox" ng-model="form.status" /> Status</label>
+  </div>
+</form>
+{% endif %}
+
+<table class="table table-striped table-hover table-condensed">
+  <thead>
+    <tr class="well well-sm">
+      <th>
+        {% if features.update %}<input type="checkbox" ng-model="selected.all" ng-click="selectAll($event)" />{% endif %}
+      </th>
+      <th>No</th>
+      <th>Phone No</th>
+      <th>New Phone No</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="o in list">
+      <td>
+        {% if features.update %}<input type="checkbox" ng-model="o.selected" ng-click="selectRow($event, o)" />{% endif %}
+      </td>
+      <td>{% verbatim %}{{$index + 1}}{% endverbatim %}</td>
+      <td>{% verbatim %}{{o.callerid}}{% endverbatim %}</td>
+      <td>
+        {% if features.update %}
+        <a href editable-text="o.callerid"
+           buttons="no"
+           onshow="editCallerID(o)"
+           onbeforesave="updateCallerID($data)">{% verbatim %}{{o.callerid}}{% endverbatim %}</a>
+        {% else %}
+        {% verbatim %}{{o.callerid}}{% endverbatim %}
+        {% endif %}
+      </td>
+      <td>{% verbatim %}{{o.status}}{% endverbatim %}</td>
+    </tr>
+  </tbody>
+</table>
+<script src="{% static 'app/js/callerid/controller.js' %}?v={{ver}}"></script>

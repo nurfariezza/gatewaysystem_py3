@@ -1,0 +1,69 @@
+{% load staticfiles %}
+
+<div class="box box-info" ng-init="init()">
+  <form class="form-horizontal">
+    <div class="box-body">
+    
+      <div class="form-group form-group-sm">
+        <label class="col-md-2 control-label">Batch ID</label>
+        <div class="col-md-3">
+          <input type="text" class="form-control" placeholder="Batch ID" name="batch_id" ng-model="userdetail.batch_id" ng-readonly="true"/>
+        </div>
+      </div>
+
+      <div class="form-group form-group-sm">
+        <label class="col-md-2 control-label">Total Numbers</label>
+        <div class="col-md-2">
+          <input type="text" class="form-control" placeholder="Total Numbers" name="batch_id" ng-model="userdetail.batch_qty" />
+        </div>
+
+        <label class="col-md-offset-1 col-md-2 control-label">Assignee</label>
+        <div class="col-md-2">
+          <input type="text" class="form-control" placeholder="Assignee" ng-model="userdetail.uploadby" />
+        </div>
+      </div>
+
+      <div class="form-group form-group-sm">
+        <label class="col-md-2 control-label">Available number</label>
+        <div class="col-md-3">
+          <input type="text" class="form-control" placeholder="Available number" ng-model="availablenum" />
+        </div>
+
+        <label class="col-md-2 control-label">Assigned Date</label>
+        <div class="col-md-2">
+          <input type="text" class="form-control" placeholder="Date Assigned" ng-model="userdetail.batch_date" />
+        </div>
+      </div>
+
+
+      <div class="form-group form-group-sm">
+        <label class="col-md-2 control-label">Used Number</label>
+        <div class="col-md-3">
+          <input type="text" class="form-control" placeholder="Used Number" ng-model="usednum" />
+        </div>
+      </div>
+
+      <div class="form-group form-group-sm">
+        <label class="col-md-2 control-label">Block Number</label>
+        <div class="col-md-3">
+          <input type="text" class="form-control" placeholder="Block Number" ng-model="suspendnum" />
+        </div>
+      </div>
+
+      <div class="form-group form-group-sm">
+        <label class="col-md-2 control-label">Test Number</label>
+        <div class="col-md-3">
+          <input type="text" class="form-control" placeholder="Testing Number" ng-model="testnum" />
+        </div>
+      </div>
+
+      <div class="form-group form-group-sm">
+        <label class="col-md-2 control-label">Reserved Number</label>
+        <div class="col-md-3">
+          <input type="text" class="form-control" placeholder="Reserve Number" ng-model="reservenum" />
+        </div>
+      </div>
+     {% comment %} </div>  {% endcomment %}
+  </form>
+</div>
+<script src="{% static 'app/js/cust/controller.js' %}?v={{ver}}"></script>

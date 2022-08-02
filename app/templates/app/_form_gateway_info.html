@@ -1,0 +1,124 @@
+{% load staticfiles %}
+
+<div class="box box-info" ng-init="init()">
+  <form class="form-horizontal">
+    <div class="box-body">
+      <div class="form-group form-group-sm">
+        <label class="col-md-2 control-label">Main Type</label>
+        <div class="col-md-2">
+          <ui-select ng-model="maintype.selected" ng-change="changeMainType()" style="width: 100%">
+            <ui-select-match placeholder="Please select">{% verbatim %}{{$select.selected.imaintype}}{% endverbatim %} - {% verbatim %}{{$select.selected.sname}}{% endverbatim %}</ui-select-match>
+            <ui-select-choices repeat="o in maintypelist | filter: $select.search">
+              <span ng-bind-html="o.imaintype | highlight: $select.search"></span>&nbsp;-&nbsp;
+              <span ng-bind-html="o.sname | highlight: $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <label class="col-md-2 control-label">Gateway ID</label>
+        <div class="col-md-2">
+          <ui-select ng-model="gw.selected" ng-change="changeGateway()" style="width: 100%">
+            <ui-select-match placeholder="Please select">{% verbatim %}{{$select.selected.igatetype}}{% endverbatim %} - {% verbatim %}{{$select.selected.sname}}{% endverbatim %}</ui-select-match>
+            <ui-select-choices repeat="o in gwlist | filter: $select.search">
+              <span ng-bind-html="o.igatetype | highlight: $select.search"></span>&nbsp;-&nbsp;
+              <span ng-bind-html="o.sname | highlight: $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <label class="col-md-2 control-label">LCR Type</label>
+        <div class="col-md-2">
+          <ui-select ng-model="lcrtype.selected" style="width: 100%">
+            <ui-select-match placeholder="Please select">{% verbatim %}{{$select.selected.ilcrtype}}{% endverbatim %} - {% verbatim %}{{$select.selected.sname}}{% endverbatim %}</ui-select-match>
+            <ui-select-choices repeat="o in lcrtypelist | filter: $select.search">
+              <span ng-bind-html="o.ilcrtype | highlight: $select.search"></span>&nbsp;-&nbsp;
+              <span ng-bind-html="o.sname | highlight: $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+      <div class="form-group form-group-sm">
+        <label class="col-md-2 control-label">Sub Type</label>
+        <div class="col-md-6">
+          <ui-select ng-model="subtype.selected" ng-change="changeSubType()" style="width: 100%">
+            <ui-select-match placeholder="Please select">{% verbatim %}{{$select.selected.isubtype}}{% endverbatim %} - {% verbatim %}{{$select.selected.sname}}{% endverbatim %}</ui-select-match>
+            <ui-select-choices repeat="o in subtypelist | filter: $select.search">
+              <span ng-bind-html="o.isubtype | highlight: $select.search"></span>&nbsp;-&nbsp;
+              <span ng-bind-html="o.sname | highlight: $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <label class="col-md-2 control-label">Language</label>
+        <div class="col-md-2">
+          <ui-select ng-model="language.selected" style="width: 100%">
+            <ui-select-match placeholder="Please select">{% verbatim %}{{$select.selected.id}}{% endverbatim %} - {% verbatim %}{{$select.selected.name}}{% endverbatim %}</ui-select-match>
+            <ui-select-choices repeat="o in languagelist | filter: $select.search">
+              <span ng-bind-html="o.id | highlight: $select.search"></span>&nbsp;-&nbsp;
+              <span ng-bind-html="o.name | highlight : $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+      <div class="form-group form-group-sm">
+        <label class="col-md-2 control-label">Rate Type</label>
+        <div class="col-md-6">
+          <ui-select ng-model="ratetype.selected" style="width: 100%">
+            <ui-select-match placeholder="Please select">{% verbatim %}{{$select.selected.iratetype}}{% endverbatim %} - {% verbatim %}{{$select.selected.sname}}{% endverbatim %}</ui-select-match>
+            <ui-select-choices repeat="o in ratetypelist | filter: $select.search">
+              <span ng-bind-html="o.iratetype | highlight: $select.search"></span>&nbsp;-&nbsp;
+              <span ng-bind-html="o.sname | highlight: $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <button class="btn btn-primary btn-flat btn-sm" type="button" ng-click="editRateType()">...</button>
+        <div class="checkbox-inline col-md-offset-2">
+          <label><input type="checkbox" ng-model="userdetail.userdetailext.status" ng-true-value="1" ng-false-value="0" />To Suspend All Caller ID</label>
+        </div>
+      </div>
+      <div class="form-group form-group-sm">
+        <label class="col-md-2 control-label">Agent Group</label>
+        <div class="col-md-8">
+          <ui-select ng-model="agroup.selected" ng-change="changeSubType()" style="width: 100%">
+            <ui-select-match placeholder="Please select">{% verbatim %}{{$select.selected.wholesalername}}{% endverbatim %}</ui-select-match>
+            <ui-select-choices repeat="o in agrouplist | filter: $select.search">
+              <span ng-bind-html="o.wholesalername | highlight: $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+      <div class="form-group form-group-sm">
+        <label class="col-md-2 control-label">SIP SubType</label>
+        <div class="col-md-5">
+          <ui-select ng-model="sipsubtype.selected" style="width: 100%">
+            <ui-select-match placeholder="Please select">{% verbatim %}{{$select.selected.sipsubtype}}{% endverbatim %} - {% verbatim %}{{$select.selected.sdesc}}{% endverbatim %}</ui-select-match>
+            <ui-select-choices repeat="o in sipsubtypelist | filter: $select.search">
+              <span ng-bind-html="o.sipsubtype | highlight: $select.search"></span>&nbsp;-&nbsp;
+              <span ng-bind-html="o.sdesc | highlight: $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <label class="col-md-offset-1 col-md-2 control-label">Sip LCR Type</label>
+        <div class="col-md-2">
+          <ui-select ng-model="siplcrtype.selected" style="width: 100%">
+            <ui-select-match placeholder="Please select">{% verbatim %}{{$select.selected.siplcrtype}}{% endverbatim %} - {% verbatim %}{{$select.selected.sdesc}}{% endverbatim %}</ui-select-match>
+            <ui-select-choices repeat="o in siplcrtypelist | filter: $select.search">
+              <span ng-bind-html="o.siplcrtype | highlight: $select.search"></span>&nbsp;-&nbsp;
+              <span ng-bind-html="o.sdesc | highlight: $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+      <div class="form-group form-group-sm" ng-show="showpbx">
+        <label class="col-md-2 control-label">Pilot Number</label>
+        <div class="col-md-2">
+          <input type="text" class="form-control" placeholder="Pilot Number" ng-model="userdetail.pbxno" />
+        </div>
+
+
+        <label class="col-md-2 control-label">Max Call Appearance</label>
+        <div class="col-md-2">
+          <input type="text" class="form-control" placeholder="MCA" id="MaxCallAppearance" ng-model="userdetail.maxcallappearancedn.MaxCallAppearance" />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<script src="{% static 'app/js/gateway/controller.js' %}?v={{ver}}"></script>

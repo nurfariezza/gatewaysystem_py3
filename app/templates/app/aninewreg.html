@@ -1,0 +1,158 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+{% load staticfiles %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Main content -->
+  <section class="content">
+    <!-- Main row -->
+    <div class="row" id="mainContainer" style="display:none" ng-controller="IndexCtrl" ng-init="init()">
+      <section class="col-md-12">
+        <form name="fm" class="form-horizontal" role="form">
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Date</label>
+            <div class="col-md-2">
+              <div class="input-group">
+                <span class="input-group-addon">From</span>
+                <input type="text" class="form-control"
+                       ng-model="form.dateFrom"
+                       ng-required="true"
+                       datepicker-popup="yyyy-MM-dd"
+                       is-open="form.openedDateFrom" />
+                <span class="input-group-btn">
+                  <button class="btn btn-primary btn-flat btn-sm" ng-click="openDateFrom()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="input-group">
+                <span class="input-group-addon">To</span>
+                <input type="text" class="form-control"
+                       ng-model="form.dateTo"
+                       ng-required="true"
+                       datepicker-popup="yyyy-MM-dd"
+                       is-open="form.openedDateTo" />
+                <span class="input-group-btn">
+                  <button class="btn btn-primary btn-flat btn-sm" ng-click="openDateTo()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <div class="col-md-6 col-md-offset-2">
+              <button type="button" class="btn btn-primary btn-flat btn-sm col-offset-xs-2" ng-click="clearcust()">Clear</button>
+              <div class="btn-group">
+                <button type="button" class="btn btn-primary btn-flat btn-sm" ng-click="downloadreport(0)" ng-disabled="fm.$invalid"><i class="glyphicon glyphicon-save-file"></i> Download Excel</button>
+                <button type="button" class="btn btn-primary btn-flat btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-disabled="fm.$invalid">
+                  <span class="caret"></span>
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a href="#" ng-click="downloadreport(1)">Text</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+      <section class="col-md-12">
+        <form class="form-horizontal" role="form">
+          <div class="form-group form-group-sm">
+            <div class="col-md-4">
+              <div class="input-group input-group-sm">
+                <input type="text" class="form-control" placeholder="Search" ng-model="form.keyword"
+                       ui-keypress="{13: 'search()'}" />
+                <span class="input-group-btn">
+                  <button class="btn btn-primary btn-flat btn-sm" type="button" ng-click="search()"><i class="glyphicon glyphicon-search"></i></button>
+                </span>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="table-responsive col-md-12">
+          <table class="table table-striped table-hover table-condensed">
+            <thead>
+              <tr>
+                <th colspan="3">
+                  <div class="pull-left">
+                    <pre ng-show="form.custlist.length > 0">{% verbatim %}{{form.custpager.itemmessage}}{% endverbatim %}</pre>
+                  </div>
+                </th>
+              </tr>
+              <tr class="well">
+                <th class="nowrap">Batddddch ID</th>
+                <th class="nowrap">Caller ID</th>
+                <th>Status</th>
+                <th>WsKey</th>
+                <th>Assigned date</th>
+                <th>Assignee</th>
+                <th>Blocked Date</th>
+                <th>Release Date</th>
+                <th>State</th>
+                <th>Code Area</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="o in form.custlist">
+                {% comment %} <td>
+                  <input type="checkbox" ng-model="o.selected" ng-click="selectcust(o)" />
+                </td> {% endcomment %}
+                <td>{% verbatim %}{{o.batchid}}{% endverbatim %}</td>
+                <td>{% verbatim %}{{o.callerid}}{% endverbatim %}</td>
+                <td>{% verbatim %}{{o.status}}{% endverbatim %}</td>
+                <td>{% verbatim %}{{o.wskey}}{% endverbatim %}</td>
+                <td>{% verbatim %}{{o.assigndate}}{% endverbatim %}</td>
+                <td>{% verbatim %}{{o.assignee}}{% endverbatim %}</td>
+                <td>{% verbatim %}{{o.blockdate}}{% endverbatim %}</td>
+                <td>{% verbatim %}{{o.releasedate}}{% endverbatim %}</td>
+                <td>{% verbatim %}{{o.state}}{% endverbatim %}</td>
+                <td>{% verbatim %}{{o.code_area}}{% endverbatim %}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2">
+                  <div class="pull-left">
+                    <uib-pagination boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                                    class="pagination-sm"
+                                    ng-model="form.custpage"
+                                    total-items="form.custpager.total"
+                                    items-per-page="form.custpager.pagesize"
+                                    max-size="form.custpager.pagesize"
+                                    ng-change="custpageChanged()">
+                    </uib-pagination>
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        {% comment %} <div class="table-responsive col-md-6">
+          <table class="table table-striped table-hover table-condensed">
+            <thead>
+              <tr>
+                <th colspan="2">
+                  <div class="pull-left">
+                    <pre>Selected customer</pre>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="o in form.list">
+                <td>{% verbatim %}{{o.accountid}}{% endverbatim %}</td>
+                <td>{% verbatim %}{{o.name}}{% endverbatim %}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div> {% endcomment %}
+      </section>
+    </div><!-- /.row (main row) -->
+
+  </section><!-- /.content -->
+</div><!-- /.content-wrapper -->
+<script src="{% static 'app/js/aninewreg/controller.js' %}"></script>
+
+{% endblock %}

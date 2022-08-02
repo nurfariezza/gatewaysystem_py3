@@ -1,0 +1,64 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+{% load staticfiles %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Main content -->
+  <section class="content">
+    <!-- Main row -->
+    {% comment %} <div class="row" id="mainContainer" style="display:none" ng-controller="IndexCtrl" > {% endcomment %}
+      <section class="col-md-12">
+        <form class="form-horizontal" method="post" action="{% url 'uploadbatch' %}" >
+{% include "app/_message.html" %}
+
+   {% csrf_token %}
+                 
+
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Batch ID</label>
+            <div class="col-md-4">
+              <input type="text" class="form-control" name="batchid"
+                       required="true" /> Eg: BATCH01012021
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <div class="col-md-3 col-md-offset-2">
+              <div class="input-group">
+                <span class="input-group-addon">From</span>
+                <input type="text" class="form-control" name="tfrom" required="true"/>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="input-group">
+                <span class="input-group-addon">To</span>
+                <input type="text" class="form-control" name="to" required="true"/>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-md-2 control-label">Total Number</label>
+            <div class="col-md-4">
+              <input type="text" class="form-control" name="cnt"
+                     placeholder="Total Number" required="true"
+                      />
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <div class="col-md-3 col-md-offset-2">
+              {% comment %} <button class="btn btn-primary btn-flat btn-sm" type="submit" >Submit</button> {% endcomment %}
+                            <button class="btn btn-primary btn-flat btn-sm" type="submit" >Submit</button>
+
+              {% comment %} <button class="btn btn-primary btn-flat btn-sm" type="button" >Unassign</button> {% endcomment %}
+            </div>
+          </div>
+        </form>
+      </section>
+    </div><!-- /.row (main row) -->
+
+  </section><!-- /.content -->
+</div><!-- /.content-wrapper -->
+{% comment %} <script src="{% static 'app/js/assign015number/controller.js' %}?v={{ver}}"></script> {% endcomment %}
+
+{% endblock %}
